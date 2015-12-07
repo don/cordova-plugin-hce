@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<plugin
+    xmlns="http://www.phonegap.com/ns/plugins/1.0"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    id="cordova-plugin-hce"
+    version="1.0.0">
+
+    <name>HCE</name>
+    <description>Host Card Emulation (HCE) Plugin</description>
+    <license>Apache 2.0</license>
+    <keywords>hce, nfc, host, card, emulation</keywords>
+
+    <repo>https://github.com/don/cordova-plugin-hce.git</repo>
+    <issue>https://github.com/don/cordova-plugin-hce/issues</issue>
+
+    <js-module src="www/hce.js" name="hce">
+        <clobbers target="hce" />
+    </js-module>
+
+    <js-module src="www/hce-util.js" name="hce.util">
+        <clobbers target="hce.util" />
+    </js-module>
+
+    <platform name="android">
+
+        <preference name="AID_FILTER" />
+
+        <config-file target="res/xml/config.xml" parent="/widget">
+            <feature name="HCE">
+                <param name="android-package" value="com.megster.cordova.hce.HCEPlugin"/>
+            </feature>
+        </config-file>
+
+        <config-file target="AndroidManifest.xml" parent="/manifest">
+            <uses-feature android:name="android.hardware.nfc.hce" android:required="true" />
+            <uses-permission android:name="android.permission.NFC" />
+
+        </config-file>
+
+        <config-file target="AndroidManifest.xml" parent="/manifest/application">
+
+            <!-- Service for handling communication with NFC terminal. -->
+            <service android:name="com.megster.cordova.hce.CordovaApduService"
+                android:exported="true"
+                android:permission="android.permission.BIND_NFC_SERVICE">
+
+                <!-- Intent filter indicating that we support card emulation. -->
+                <intent-filter>
+                    <action android:name="android.nfc.cardemulation.action.HOST_APDU_SERVICE"/>
+                    <category android:name="android.intent.category.DEFAULT"/>
+                </intent-filter>
+                <!-- Required XML configuration file, listing the AIDs that we are emulating cards
+                for. This defines what protocols our card emulation service supports. -->
+                <meta-data android:name="android.nfc.cardemulation.host_apdu_service"
+                    android:resource="@xml/aid_list"/>
+                </service>
+        </config-file>
+
+        <!-- aid is define when installing the plugin using variable AID_FILTER=F222222222 -->
+        <config-file target="res/xml/aid_list.xml" parent="/host-apdu-service/aid-group">
+            <aid-filter android:name="$AID_FILTER"/>
+        </config-file>
+
+        <source-file src="src/android/HCEPlugin.java"
+            target-dir="src/com/megster/cordova/hce"/>
+
+        <source-file src="src/android/CordovaApduService.java"
+                target-dir="src/com/megster/cordova/hce"/>
+
+        <source-file src="src/android/aid_list.xml"
+                target-dir="res/xml"/>
+
+        <source-file src="src/android/hce_strings.xml"
+                target-dir="res/values"/>
+
+    </platform>
+
+</plugin>

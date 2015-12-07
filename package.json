@@ -1,0 +1,30 @@
+{
+  "name": "cordova-plugin-hce",
+  "version": "1.0.0",
+  "description": "Host Card Emulation (HCE) Plugin",
+  "cordova": {
+    "id": "cordova-plugin-hce",
+    "platforms": [
+      "android"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/don/cordova-plugin-hce.git"
+  },
+  "keywords": [
+    "hce",
+    "nfc",
+    "host",
+    "card",
+    "emulation",
+    "ecosystem:cordova",
+    "cordova-android"
+  ],
+  "author": "Don Coleman <don.coleman@gmail.com>",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/don/cordova-plugin-hce/issues"
+  },
+  "homepage": "https://github.com/don/cordova-plugin-hce#readme"
+}
