@@ -24,6 +24,12 @@ module.exports = {
     // http://developer.android.com/reference/android/nfc/cardemulation/HostApduService.html#onDeactivated(int)
     registerDeactivatedCallback: function(success, failure) {
         cordova.exec(success, failure, 'HCE', 'registerDeactivatedCallback', []);
+    },
+
+    // Check HCE status
+    // The result callback will be called with parameter value one of: NOT_AVAILABLE, OK, OFF
+    checkStatus: function (result, failure) {
+        cordova.exec(result, failure, 'HCE', 'checkStatus', []);
     }
 
 };

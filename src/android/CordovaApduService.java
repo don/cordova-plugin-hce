@@ -3,6 +3,9 @@
 
 package com.megster.cordova.hce;
 
+import android.content.Context;
+import android.nfc.NfcAdapter;
+import android.nfc.NfcManager;
 import android.nfc.cardemulation.HostApduService;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,6 +18,11 @@ public class CordovaApduService extends HostApduService {
     // future versions could use bind
     private static HCEPlugin hcePlugin;
     private static CordovaApduService cordovaApduService;
+
+    public CordovaApduService() {
+        Log.i(TAG,"starting CordovaApduService");
+        cordovaApduService = this;
+    }
 
     static void setHCEPlugin(HCEPlugin _hcePlugin) {
         hcePlugin = _hcePlugin;
@@ -81,6 +89,13 @@ public class CordovaApduService extends HostApduService {
             Log.e(TAG, "No reference to HCE Plugin.");
         }
 
+    }
+
+    static HCEPlugin.Status checkStatus() {
+        if (cordovaApduService != null) {
+
+        }
+        return HCEPlugin.Status.NOT_AVAILABLE;
     }
 
     /**

@@ -3,6 +3,8 @@
 
 package com.megster.cordova.hce;
 
+import android.content.pm.PackageManager;
+import android.nfc.NfcAdapter;
 import android.util.Log;
 
 import org.apache.cordova.CallbackContext;
@@ -18,10 +20,13 @@ public class HCEPlugin extends CordovaPlugin {
     private static final String REGISTER_COMMAND_CALLBACK = "registerCommandCallback";
     private static final String SEND_RESPONSE = "sendResponse";
     private static final String REGISTER_DEACTIVATED_CALLBACK = "registerDeactivatedCallback";
+    private static final String REGISTER_CHECK_STATUS = "checkStatus";
     private static final String TAG = "HCEPlugin";
 
     private CallbackContext onCommandCallback;
     private CallbackContext onDeactivatedCallback;
+
+
 
     @Override
     public boolean execute(String action, CordovaArgs args, CallbackContext callbackContext) throws JSONException {
@@ -58,6 +63,23 @@ public class HCEPlugin extends CordovaPlugin {
             result.setKeepCallback(true);
             callbackContext.sendPluginResult(result);
 
+        } else if (action.equalsIgnoreCase(REGISTER_CHECK_STATUS)) {
+            Log.d(TAG, "REGISTER_CHECK_STATUS 1");
+
+            PackageManager pm = this.cordova.getActivity().getPackageManager();
+            Status st = Status.NOT_AVAILABLE;
+            if ( pm.hasSystemFeature(PackageManager.FEATURE_NFC_HOST_CARD_EMULATION) ) {
+                st = Status.OFF;
+                NfcAdapter nfcAdapter = NfcAdapter.getDefaultAdapter(this.cordova.getActivity());
+                if (nfcAdapter.isEnabled()) {
+                    st = Status.OK;
+                }
+            }
+            PluginResult result = new PluginResult(PluginResult.Status.OK, st.toString());
+            Log.d(TAG, "REGISTER_CHECK_STATUS 2");
+            callbackContext.sendPluginResult(result);
+            Log.d(TAG, "REGISTER_CHECK_STATUS 3");
+
         } else {
 
             return false;
@@ -83,5 +105,11 @@ public class HCEPlugin extends CordovaPlugin {
             result.setKeepCallback(true);
             onCommandCallback.sendPluginResult(result);
         }
+    }
+
+    public enum Status {
+        NOT_AVAILABLE,
+        OK,
+        OFF
     }
 }

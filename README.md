@@ -24,6 +24,7 @@ The AID for your application must be passed as a variable when installing the pl
 - [hce.registerCommandCallback](hceregistercommandcallback)
 - [hce.sendResponse](hcesendresponse)
 - [hce.registerDeactivatedCallback](hceregisterdeactivatedcallback)
+- [hce.checkStatus](checkStatus)
 
 ## hce.registerCommandCallback
 
@@ -95,6 +96,20 @@ See [HostApduService.onDeactivated](http://developer.android.com/reference/andro
     var onDeactivated = function(reason) {
         console.log("Deactivated. Reason code = " + reason);
     }
+
+## hce.checkStatus
+
+Check if HCE is available and enabled.
+
+    hce.checkStatus(result);
+
+#### Parameters
+- __success__: Result callback function that is with result of the check
+- __failure__: Error callback function, invoked when error occurs. [optional]
+
+
+#### Description
+Function `checkStatus` allows your JavaScript code to check if HCE is available on the device and if NFC is turned ON.
 
 # HCE Util
 
