@@ -32,7 +32,7 @@
         </config-file>
 
         <config-file target="AndroidManifest.xml" parent="/manifest">
-            <uses-feature android:name="android.hardware.nfc.hce" android:required="true" />
+            <uses-feature android:name="android.hardware.nfc.hce" android:required="false" />
             <uses-permission android:name="android.permission.NFC" />
 
         </config-file>
