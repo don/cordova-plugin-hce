@@ -21,9 +21,9 @@ The AID for your application must be passed as a variable when installing the pl
 
 ## Methods
 
-- [hce.registerCommandCallback](hceregistercommandcallback)
-- [hce.sendResponse](hcesendresponse)
-- [hce.registerDeactivatedCallback](hceregisterdeactivatedcallback)
+- [hce.registerCommandCallback](#hceregistercommandcallback)
+- [hce.sendResponse](#hcesendresponse)
+- [hce.registerDeactivatedCallback](#hceregisterdeactivatedcallback)
 
 ## hce.registerCommandCallback
 
